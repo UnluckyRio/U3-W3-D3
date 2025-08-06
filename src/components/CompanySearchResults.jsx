@@ -67,38 +67,43 @@ const CompanySearchResults = () => {
   }
 
   return (
-    <Container fluid className="bg-light min-vh-100">
-      <Container>
-        <Row>
-          {/* Header */}
-          <Col xs={12} className="py-5 gradient-header">
-            <div className="text-white">
-              <div className="d-flex justify-content-between align-items-start mb-4">
-                <div className="flex-grow-1">
-                  <div className="d-flex align-items-center mb-3">
-                    <div className="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center me-3" 
-                         style={{width: '60px', height: '60px', fontSize: '1.5rem'}}>
-                      <i className="bi bi-building"></i>
-                    </div>
-                    <div>
-                      <h1 className="display-5 fw-bold mb-1">
-                        {params.company}
-                        {isCompanyFavourite && <i className="bi bi-star-fill text-warning ms-3"></i>}
-                      </h1>
-                      <p className="lead mb-0">Offerte di lavoro disponibili</p>
-                    </div>
+    <>
+      {/* Header a tutta larghezza */}
+      <Container fluid className="py-5 gradient-header">
+        <Container>
+          <div className="text-white">
+            <div className="d-flex justify-content-between align-items-start mb-4">
+              <div className="flex-grow-1">
+                <div className="d-flex align-items-center mb-3">
+                  <div className="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center me-3" 
+                       style={{width: '60px', height: '60px', fontSize: '1.5rem'}}>
+                    <i className="bi bi-building"></i>
+                  </div>
+                  <div>
+                    <h1 className="display-5 fw-bold mb-1">
+                      {params.company}
+                      {isCompanyFavourite && <i className="bi bi-star-fill text-warning ms-3"></i>}
+                    </h1>
+                    <p className="lead mb-0">Offerte di lavoro disponibili</p>
                   </div>
                 </div>
-                <div className="d-flex gap-2">
-                  <Link to="/" className="btn btn-light">
-                    <i className="bi bi-arrow-left me-2"></i>
-                    Home
-                  </Link>
-                  <FavouritesButton />
-                </div>
+              </div>
+              <div className="d-flex gap-2">
+                <Link to="/" className="btn btn-light">
+                  <i className="bi bi-arrow-left me-2"></i>
+                  Home
+                </Link>
+                <FavouritesButton />
               </div>
             </div>
-          </Col>
+          </div>
+        </Container>
+      </Container>
+      
+      {/* Contenuto principale */}
+      <Container fluid className="bg-light min-vh-100">
+        <Container>
+          <Row>
           
           {/* Contenuto */}
           <Col xs={12} className="py-5">
@@ -140,9 +145,10 @@ const CompanySearchResults = () => {
               </>
             )}
           </Col>
-        </Row>
+          </Row>
+        </Container>
       </Container>
-    </Container>
+    </>
   );
 };
 

@@ -7,22 +7,26 @@ Un'applicazione web moderna e intuitiva per la ricerca di opportunità lavorativ
 ## ✨ Funzionalità Principali
 
 ### 🔎 **Ricerca Avanzata**
+
 - Ricerca per posizione lavorativa (developer, designer, manager, etc.)
 - Risultati in tempo reale tramite API esterna
 - Interfaccia di ricerca moderna e user-friendly
 
 ### ⭐ **Sistema Preferiti**
+
 - Aggiungi/rimuovi aziende dalla lista dei preferiti
 - Gestione stato tramite Redux per persistenza dei dati
 - Indicatori visivi per aziende già salvate nei preferiti
 - Pagina dedicata per visualizzare e gestire i preferiti
 
 ### 🏢 **Esplorazione Aziende**
+
 - Visualizzazione dettagliata delle offerte per singola azienda
 - Navigazione intuitiva tra le diverse sezioni
 - Informazioni complete su ogni posizione lavorativa
 
 ### 🎨 **Design Moderno**
+
 - Interfaccia responsive con React Bootstrap
 - Gradienti personalizzati e animazioni fluide
 - Icone Bootstrap per un'esperienza visiva accattivante
@@ -40,23 +44,27 @@ Un'applicazione web moderna e intuitiva per la ricerca di opportunità lavorativ
 ## 🚀 Come Iniziare
 
 ### Prerequisiti
+
 - Node.js (versione 16 o superiore)
 - npm o yarn
 
 ### Installazione
 
 1. **Clona il repository**
+
    ```bash
    git clone <repository-url>
    cd U3-W3-D3
    ```
 
 2. **Installa le dipendenze**
+
    ```bash
    npm install
    ```
 
 3. **Avvia il server di sviluppo**
+
    ```bash
    npm run dev
    ```
@@ -102,6 +110,46 @@ src/
 - **Feedback visivo** per tutte le interazioni utente
 - **Accessibilità** migliorata con focus states
 - **Gradiente personalizzato** per un look moderno
+
+## 🚀 Deploy su GitHub Pages
+
+Il progetto è configurato per il deploy automatico su GitHub Pages tramite GitHub Actions.
+
+### 📋 Prerequisiti per il Deploy
+
+1. **Repository GitHub**: Il codice deve essere su un repository GitHub
+2. **GitHub Pages abilitato**: Nelle impostazioni del repository, abilita GitHub Pages
+3. **Branch principale**: Assicurati che il codice sia sul branch `main` o `master`
+
+### ⚙️ Configurazione
+
+1. **Workflow automatico**: Il file `.github/workflows/deploy.yml` gestisce il build e deploy automatico
+2. **Base path**: Il file `vite.config.js` è configurato con il base path `/U3-W3-D3/`
+3. **Build ottimizzato**: Vite genera i file ottimizzati nella cartella `dist/`
+
+### 🔄 Processo di Deploy
+
+1. **Push del codice**: Ogni push sul branch principale attiva il workflow
+2. **Build automatico**: GitHub Actions installa le dipendenze e builda il progetto
+3. **Deploy**: I file vengono automaticamente pubblicati su GitHub Pages
+4. **URL live**: Il sito sarà disponibile su `https://[username].github.io/U3-W3-D3/`
+
+### 🛠️ Comandi per il Deploy Manuale
+
+```bash
+# Build del progetto per produzione
+npm run build
+
+# Preview del build locale
+npm run preview
+```
+
+### 📝 Note Importanti
+
+- **Nome repository**: Modifica il `base` in `vite.config.js` se il repository ha un nome diverso
+- **Permessi**: Il workflow richiede permessi di scrittura per GitHub Pages
+- **Tempo deploy**: Il deploy può richiedere alcuni minuti per essere completato
+- **Cache**: GitHub Pages può cacheare i contenuti, usa Ctrl+F5 per forzare il refresh
 
 ## 📄 Licenza
 
