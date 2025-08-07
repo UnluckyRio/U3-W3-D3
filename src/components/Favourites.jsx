@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { Container, Row, Col, Card, Button, Badge, Alert } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { removeFromFavourites } from '../redux/favouritesSlice'
+import { removeFromFavourites } from '../redux/actions'
 
 const Favourites = () => {
   // Ottiene la lista delle aziende preferite dallo store Redux

@@ -1,30 +1,37 @@
-import { createSlice } from '@reduxjs/toolkit'
+// Reducer per gestire le aziende preferite
+import {
+  ADD_TO_FAVOURITES,
+  REMOVE_FROM_FAVOURITES
+} from './actionTypes'
 
-// Slice per gestire le aziende preferite
-const favouritesSlice = createSlice({
-  name: 'favourites',
-  initialState: {
-    companies: [], // Array delle aziende preferite
-  },
-  reducers: {
-    // Azione per aggiungere un'azienda ai preferiti
-    addToFavourites: (state, action) => {
+// Stato iniziale per i preferiti
+const initialState = {
+  companies: [] // Array delle aziende preferite
+}
+
+// Reducer per i preferiti
+const favouritesReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ADD_TO_FAVOURITES:
       const companyName = action.payload
       // Controlla se l'azienda non è già nei preferiti
       if (!state.companies.includes(companyName)) {
-        state.companies.push(companyName)
+        return {
+          ...state,
+          companies: [...state.companies, companyName]
+        }
       }
-    },
-    // Azione per rimuovere un'azienda dai preferiti
-    removeFromFavourites: (state, action) => {
-      const companyName = action.payload
-      state.companies = state.companies.filter(company => company !== companyName)
-    },
-  },
-})
+      return state
+    
+    case REMOVE_FROM_FAVOURITES:
+      return {
+        ...state,
+        companies: state.companies.filter(company => company !== action.payload)
+      }
+    
+    default:
+      return state
+  }
+}
 
-// Esporta le azioni
-export const { addToFavourites, removeFromFavourites } = favouritesSlice.actions
-
-// Esporta il reducer
-export default favouritesSlice.reducer
+export default favouritesReducer

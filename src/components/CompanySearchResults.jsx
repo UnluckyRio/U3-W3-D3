@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Container, Row, Col, Button, Card, Badge, Spinner, Alert } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCompanyJobs } from "../redux/actions";
 import Job from "./Job";
 
 // Componente per il pulsante dei preferiti con stile migliorato
@@ -22,38 +23,18 @@ const FavouritesButton = () => {
 }
 
 const CompanySearchResults = () => {
-  const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const params = useParams();
+  const dispatch = useDispatch();
+  
+  // Selettori Redux per accedere allo stato
   const favouriteCompanies = useSelector(state => state.favourites.companies);
+  const { companyJobs: jobs, companyLoading: loading, companyError: error } = useSelector(state => state.jobs);
   const isCompanyFavourite = favouriteCompanies.includes(params.company);
 
-  const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?company=";
-
   useEffect(() => {
-    getJobs();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.company]);
-
-  const getJobs = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await fetch(baseEndpoint + params.company);
-      if (response.ok) {
-        const { data } = await response.json();
-        setJobs(data);
-      } else {
-        setError("Errore nel caricamento delle offerte di lavoro");
-      }
-    } catch (error) {
-      console.log(error);
-      setError("Errore di connessione");
-    } finally {
-      setLoading(false);
-    }
-  };
+    // Dispatch dell'azione asincrona per il fetch dei lavori dell'azienda
+    dispatch(fetchCompanyJobs(params.company));
+  }, [dispatch, params.company]);
 
   if (loading) {
     return (

@@ -8,9 +8,12 @@ import {
   Card,
   Badge,
   InputGroup,
+  Spinner,
+  Alert,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchJobs, clearJobs } from "../redux/actions";
 import Job from "./Job";
 
 // Componente per il pulsante dei preferiti con stile migliorato
@@ -32,10 +35,10 @@ const FavouritesButton = () => {
 
 const MainSearch = () => {
   const [query, setQuery] = useState("");
-  const [jobs, setJobs] = useState([]);
-
-  const baseEndpoint =
-    "https://strive-benchmark.herokuapp.com/api/jobs?search=";
+  const dispatch = useDispatch();
+  
+  // Selettori Redux per accedere allo stato
+  const { jobs, loading, error } = useSelector((state) => state.jobs);
 
   const handleChange = (e) => {
     setQuery(e.target.value);
@@ -43,19 +46,29 @@ const MainSearch = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch(baseEndpoint + query + "&limit=20");
-      if (response.ok) {
-        const { data } = await response.json();
-        setJobs(data);
-      } else {
-        alert("Error fetching results");
-      }
-    } catch (error) {
-      console.log(error);
+    
+    if (query.trim()) {
+      // Dispatch dell'azione asincrona per il fetch
+      dispatch(fetchJobs(query.trim()));
     }
   };
+  
+  const handleClearResults = () => {
+    dispatch(clearJobs());
+    setQuery("");
+  };
+  
+  // Gestione del loading
+  if (loading) {
+    return (
+      <Container fluid className="bg-light min-vh-100 d-flex align-items-center justify-content-center">
+        <div className="text-center">
+          <Spinner animation="border" variant="primary" className="loading-spinner pulse" />
+          <p className="mt-3 text-muted">Ricerca in corso...</p>
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <>
@@ -117,14 +130,35 @@ const MainSearch = () => {
 
             {/* Risultati */}
             <Col xs={12} className="pb-5">
+              {/* Gestione errori */}
+              {error && (
+                <Alert variant="danger" className="shadow-sm border-0 mb-4">
+                  <i className="bi bi-exclamation-triangle me-2"></i>
+                  {error}
+                </Alert>
+              )}
+              
+              {/* Risultati trovati */}
               {jobs.length > 0 && (
                 <div className="mb-4">
-                  <h3 className="text-primary mb-3">
-                    <i className="bi bi-briefcase me-2"></i>
-                    Risultati trovati: <Badge bg="primary">{jobs.length}</Badge>
-                  </h3>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <h3 className="text-primary mb-0">
+                      <i className="bi bi-briefcase me-2"></i>
+                      Risultati trovati: <Badge bg="primary">{jobs.length}</Badge>
+                    </h3>
+                    <Button 
+                      variant="outline-secondary" 
+                      onClick={handleClearResults}
+                      className="shadow-sm"
+                    >
+                      <i className="bi bi-x-circle me-2"></i>
+                      Pulisci risultati
+                    </Button>
+                  </div>
                 </div>
               )}
+              
+              {/* Lista dei lavori */}
               <div className="row g-3">
                 {jobs.map((jobData) => (
                   <div key={jobData._id} className="col-12">

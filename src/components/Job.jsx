@@ -1,7 +1,7 @@
 import { Card, Button, Badge, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { addToFavourites, removeFromFavourites } from '../redux/favouritesSlice'
+import { addToFavourites, removeFromFavourites } from '../redux/actions'
 
 const Job = ({ data }) => {
   // Ottiene la lista delle aziende preferite dallo store
